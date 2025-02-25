@@ -1,6 +1,7 @@
 package com.qa.opencart.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.qa.opencart.constants.AppConstants;
@@ -31,4 +32,33 @@ public class LoginPageTest extends BaseTest{
 		homepage = loginpage.doLogin(prop.getProperty("username"), prop.getProperty("password"));
 		Assert.assertEquals(homepage.getHomePageTitle(), AppConstants.HOME_PAGE_TITLE, AppError.TITLE_NOT_FOUND_ERROR);
 	}
+	
+	@Test
+	public void logoTest() {
+		Assert.assertTrue(commonsPage.isLogoDisplayed(),AppError.LOGO_NOT_FOUND_ERROR);	
+	}
+	
+	@DataProvider
+	public Object[][] getFooterData() {
+		return new Object[][] {
+			{"About Us"},
+			{"Contact Us"},
+			{"Specials"},
+			{"Order History"}	
+		};
+	}
+	
+	@Test(dataProvider = "getFooterData")
+	public void footerTest(String footerlink) {
+		Assert.assertTrue(commonsPage.checkFooterLink(footerlink));
+	}
 }
+
+
+
+
+
+
+
+
+
